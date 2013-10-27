@@ -35,12 +35,12 @@ universal char-set detection library by Mozilla.
 %files
 %doc COPYING AUTHORS
 %{_bindir}/%{name}
-
+%{_mandir}/man1/%{name}.1.*
 
 %files -n %{lib_name}
 %doc COPYING AUTHORS
 %{_libdir}/lib%{name}.so.%{lib_major}*
-%{_mandir}/man1/%{name}.1.*
+
 
 
 
