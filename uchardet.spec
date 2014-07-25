@@ -9,7 +9,7 @@
 Name: uchardet
 Summary: Universal char-set detection
 Version: 0.0.1
-Release: 1
+Release: 2
 Group: Development/Other
 License: MPLv1.1 
 URL: http://code.google.com/p/uchardet/
