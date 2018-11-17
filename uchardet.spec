@@ -1,77 +1,68 @@
-# define distsuffix mrb
-# define debug_package %{nil}
+%define major		0
+%define libname		%mklibname %{name} %{major}
+%define develname	%mklibname %{name} -d
 
+Name:		uchardet
+Version:	0.0.6
+Release:	1
+Summary:	Universal charset detection
+Group:		Development/Other
+License:	MPL
+URL:		https://www.freedesktop.org/wiki/Software/uchardet/
+Source0:	https://www.freedesktop.org/software/uchardet/releases/%{name}-%{version}.tar.xz
 
-%define lib_major 0
-%define lib_name %mklibname uchardet %{lib_major}
-%define develname %mklibname -d uchardet
-
-Name: uchardet
-Summary: Universal char-set detection
-Version: 0.0.1
-Release: 1
-Group: Development/Other
-License: MPLv1.1 
-URL: http://code.google.com/p/uchardet/
-Source0: http://uchardet.googlecode.com/files/%{name}-%{version}.tar.gz
-BuildRequires: cmake
+BuildRequires:	cmake
 
 %description
 uchardet is a C language binding of the original C++ implementation of the
-universal char-set detection library by Mozilla. uchardet is an encoding
+universal charset detection library by Mozilla. uchardet is an encoding
 detector library, which takes a sequence of bytes in an unknown character
 encoding without any additional information, and attempts to determine the
-encoding of the text.
+encoding of the text. Returned encoding names are iconv-compatible.
 
+#------------------------------------------------------------------------------
 
-%package -n %{lib_name}
-Summary:    Universal charset detection
-Group:      Development/Other
+%package -n	%{libname}
+Summary:	Library for %{name}
+Group:		System/Libraries
 
-%description -n %{lib_name}
+%description -n	%{libname}
 C language binding of the original C++ implementation of the
-universal char-set detection library by Mozilla.
+universal charset detection library by Mozilla.
 
-%files
-%doc COPYING AUTHORS
-%{_bindir}/%{name}
+#------------------------------------------------------------------------------
 
+%package -n	%{develname}
+Summary:	Development files for %{name}
+Group:		Development/Other
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
-%files -n %{lib_name}
-%doc COPYING AUTHORS
-%{_libdir}/lib%{name}.so.%{lib_major}*
-%{_mandir}/man1/%{name}.1.*
+%description -n	%{develname}
+Header and Libraries files for the package %{name}.
 
-
-
-
-%package -n %develname
-Summary: Development files for uchardet
-Provides:  %{name}-devel = %{version}-%{release}
-Requires:  %{lib_name} = %{version}-%release
-
-%description -n %develname
-Header files and Libraries for the package uchardet.
-
-%files -n %develname
-%doc COPYING AUTHORS
-%{_includedir}/%{name}
-%{_libdir}/lib%{name}.a
-%{_libdir}/lib%{name}.so
-%{_libdir}/pkgconfig/%{name}.pc
-
-
+#------------------------------------------------------------------------------
 %prep
 %setup -q
 
 %build
 %cmake
-%make
+%make_build
 
 %install
-%makeinstall_std -C build
+%make_install -C build
 
+%files
+%doc COPYING AUTHORS README.md
+%{_bindir}/%{name}
+%{_mandir}/man1/%{name}.1.*
 
+%files -n %{libname}
+%{_libdir}/lib%{name}.so.%{major}
+%{_libdir}/lib%{name}.so.%{major}.*
 
-
-
+%files -n %{develname}
+%{_includedir}/%{name}
+%{_libdir}/lib%{name}.a
+%{_libdir}/lib%{name}.so
+%{_libdir}/pkgconfig/%{name}.pc
