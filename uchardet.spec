@@ -3,7 +3,7 @@
 %define develname	%mklibname %{name} -d
 
 Name:		uchardet
-Version:	0.0.6
+Version:	0.0.7
 Release:	1
 Summary:	Universal charset detection
 Group:		Development/Other
