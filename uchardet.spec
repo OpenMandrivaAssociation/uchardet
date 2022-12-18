@@ -1,16 +1,15 @@
-%define major		0
-%define libname		%mklibname %{name} %{major}
-%define develname	%mklibname %{name} -d
+%define major 0
+%define libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
 
 Name:		uchardet
-Version:	0.0.7
+Version:	0.0.8
 Release:	1
 Summary:	Universal charset detection
 Group:		Development/Other
 License:	MPL
 URL:		https://www.freedesktop.org/wiki/Software/uchardet/
 Source0:	https://www.freedesktop.org/software/uchardet/releases/%{name}-%{version}.tar.xz
-
 BuildRequires:	cmake
 
 %description
@@ -22,28 +21,28 @@ encoding of the text. Returned encoding names are iconv-compatible.
 
 #------------------------------------------------------------------------------
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Library for %{name}
 Group:		System/Libraries
 
-%description -n	%{libname}
+%description -n %{libname}
 C language binding of the original C++ implementation of the
 universal charset detection library by Mozilla.
 
 #------------------------------------------------------------------------------
 
-%package -n	%{develname}
+%package -n %{develname}
 Summary:	Development files for %{name}
 Group:		Development/Other
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n	%{develname}
+%description -n %{develname}
 Header and Libraries files for the package %{name}.
 
 #------------------------------------------------------------------------------
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 %cmake
@@ -55,7 +54,7 @@ Header and Libraries files for the package %{name}.
 %files
 %doc COPYING AUTHORS README.md
 %{_bindir}/%{name}
-%{_mandir}/man1/%{name}.1.*
+%doc %{_mandir}/man1/%{name}.1.*
 
 %files -n %{libname}
 %{_libdir}/lib%{name}.so.%{major}
@@ -66,3 +65,5 @@ Header and Libraries files for the package %{name}.
 %{_libdir}/lib%{name}.a
 %{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
+%dir %{_libdir}/cmake/%{name}
+%{_libdir}/cmake/%{name}/*.cmake
