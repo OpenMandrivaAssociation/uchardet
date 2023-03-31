@@ -4,7 +4,7 @@
 
 Name:		uchardet
 Version:	0.0.8
-Release:	1
+Release:	2
 Summary:	Universal charset detection
 Group:		Development/Other
 License:	MPL
